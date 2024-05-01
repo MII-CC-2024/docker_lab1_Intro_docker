@@ -456,3 +456,23 @@ $ docker inspect mi-red
 ```
 
 
+k) Volúmenes: Almacenamiento Persistente
+
+En esta guía, hemos trabajado con persistencia montando un directorio (tipo Bind Mount), pero lo ideal es crear volúmenes, locales o remotos, para persistir la información y compartirla entre los contenedores. Algunos comandos de interés son:
+
+Mostrar los volúmenes:
+```
+$ docker volume ls 
+```
+Crear un volumen:
+```
+$ docker volume create my-vol
+```
+Iniciar un contenedor con un volumen:
+```
+$ docker run -d --name devtest -v myvol:/app nginx:latest
+```
+Podemos inspeccionar un volumen:
+```
+$ docker volume inspect my-vol
+```
