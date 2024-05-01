@@ -48,18 +48,22 @@ Es necesario volver a entrar al sistema para que los cambios tengan efecto.
 Comprueba la versión de Docker instalada
 ```
 $ docker --version
-Docker version 20.10.14, build a224086
+Docker version 26.0.1, build d260a54
 ```
 Muestra la información de Docker
 ```
 $ docker info
-Client:
+Client: Docker Engine - Community
+ Version:    26.0.1
  Context:    default
  Debug Mode: false
  Plugins:
-  app: Docker App (Docker Inc., v0.9.1-beta3)
-  buildx: Build with BuildKit (Docker Inc., v0.5.1-docker)
-  scan: Docker Scan (Docker Inc., v0.7.0)
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.13.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v2.26.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
 
 Server:
  Containers: 0
@@ -67,43 +71,47 @@ Server:
   Paused: 0
   Stopped: 0
  Images: 0
- Server Version: 20.10.14
+ Server Version: 26.0.1
  Storage Driver: overlay2
   Backing Filesystem: extfs
   Supports d_type: true
+  Using metacopy: false
   Native Overlay Diff: true
   userxattr: false
  Logging Driver: json-file
- Cgroup Driver: cgroupfs
- Cgroup Version: 1
+ Cgroup Driver: systemd
+ Cgroup Version: 2
  Plugins:
   Volume: local
   Network: bridge host ipvlan macvlan null overlay
-  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+  Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
  Swarm: inactive
- Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux runc
+ Runtimes: io.containerd.runc.v2 runc
  Default Runtime: runc
  Init Binary: docker-init
- containerd version: 05f951a3781f4f2c1911b05e61c160e9c30eaa8e
- runc version: 12644e614e25b05da6fd08a38ffa0cfe1903fdec
+ containerd version: e377cd56a71523140ca6ae87e30244719194a521
+ runc version: v1.1.12-0-g51d5e94
  init version: de40ad0
  Security Options:
   apparmor
   seccomp
-   Profile: default
- Kernel Version: 5.4.0-1045-aws
- Operating System: Ubuntu 18.04.5 LTS
+   Profile: builtin
+  cgroupns
+ Kernel Version: 6.5.0-1018-aws
+ Operating System: Ubuntu 22.04.4 LTS
  OSType: linux
  Architecture: x86_64
  CPUs: 1
- Total Memory: 978.6MiB
- Name: ip-172-31-20-222
- ID: RPUM:VTFA:XVZO:P5YH:PXKO:ZQYD:3T6L:CMUT:UEBW:CL37:CMOJ:STJI
+ Total Memory: 949.2MiB
+ Name: ip-172-31-42-25
+ ID: 5259afed-a352-4833-940d-5de4600c007b
  Docker Root Dir: /var/lib/docker
  Debug Mode: false
- Registry: https://index.docker.io/v1/
- Labels:
+ Username: jluisalvarez
  Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Live Restore Enabled: false
 
 ```
 
@@ -111,30 +119,29 @@ También podemos ver la versión tanto del cliente como del servidor
 ```
 $ docker version
 Client: Docker Engine - Community
- Version:           20.10.14
- API version:       1.41
- Go version:        go1.13.15
- Git commit:        370c289
- Built:             Fri Apr  9 22:46:01 2021
+ Version:           26.0.1
+ API version:       1.45
+ Go version:        go1.21.9
+ Git commit:        d260a54
+ Built:             Thu Apr 11 10:53:21 2024
  OS/Arch:           linux/amd64
  Context:           default
- Experimental:      true
 
 Server: Docker Engine - Community
  Engine:
-  Version:          20.10.14
-  API version:      1.41 (minimum version 1.12)
-  Go version:       go1.13.15
-  Git commit:       8728dd2
-  Built:            Fri Apr  9 22:44:13 2021
+  Version:          26.0.1
+  API version:      1.45 (minimum version 1.24)
+  Go version:       go1.21.9
+  Git commit:       60b9add
+  Built:            Thu Apr 11 10:53:21 2024
   OS/Arch:          linux/amd64
   Experimental:     false
  containerd:
-  Version:          1.4.4
-  GitCommit:        05f951a3781f4f2c1911b05e61c160e9c30eaa8e
+  Version:          1.6.31
+  GitCommit:        e377cd56a71523140ca6ae87e30244719194a521
  runc:
-  Version:          1.0.0-rc93
-  GitCommit:        12644e614e25b05da6fd08a38ffa0cfe1903fdec
+  Version:          1.1.12
+  GitCommit:        v1.1.12-0-g51d5e94
  docker-init:
   Version:          0.19.0
   GitCommit:        de40ad0
@@ -144,85 +151,64 @@ Server: Docker Engine - Community
 Ayuda comando docker:
 
 ```
-$ docker 
+$  docker help
+
 Usage:  docker [OPTIONS] COMMAND
 
 A self-sufficient runtime for containers
 
-Options:
-      --config string      Location of client config files (default
-                           "C:\\Users\\alvarez\\.docker")
-  -c, --context string     Name of the context to use to connect to the
-                           daemon (overrides DOCKER_HOST env var and
-                           default context set with "docker context use")
-  -D, --debug              Enable debug mode
-  -H, --host list          Daemon socket(s) to connect to
-  -l, --log-level string   Set the logging level
-                           ("debug"|"info"|"warn"|"error"|"fatal")
-                           (default "info")
-      --tls                Use TLS; implied by --tlsverify
-      --tlscacert string   Trust certs signed only by this CA (default
-                           "C:\\Users\\alvarez\\.docker\\ca.pem")
-      --tlscert string     Path to TLS certificate file (default
-                           "C:\\Users\\alvarez\\.docker\\cert.pem")
-      --tlskey string      Path to TLS key file (default
-                           "C:\\Users\\alvarez\\.docker\\key.pem")
-      --tlsverify          Use TLS and verify the remote
-  -v, --version            Print version information and quit
+Common Commands:
+  run         Create and run a new container from an image
+  exec        Execute a command in a running container
+  ps          List containers
+  build       Build an image from a Dockerfile
+  pull        Download an image from a registry
+  push        Upload an image to a registry
+  images      List images
+  login       Log in to a registry
+  logout      Log out from a registry
+  search      Search Docker Hub for images
+  version     Show the Docker version information
+  info        Display system-wide information
 
 Management Commands:
-  app*        Docker App (Docker Inc., v0.9.1-beta3)
   builder     Manage builds
-  buildx*     Build with BuildKit (Docker Inc., v0.5.1-docker)
-  config      Manage Docker configs
+  buildx*     Docker Buildx
+  compose*    Docker Compose
   container   Manage containers
   context     Manage contexts
   image       Manage images
   manifest    Manage Docker image manifests and manifest lists
   network     Manage networks
-  node        Manage Swarm nodes
   plugin      Manage plugins
-  scan*       Docker Scan (Docker Inc., v0.6.0)
-  secret      Manage Docker secrets
-  service     Manage services
-  stack       Manage Docker stacks
-  swarm       Manage Swarm
   system      Manage Docker
   trust       Manage trust on Docker images
   volume      Manage volumes
 
+Swarm Commands:
+  swarm       Manage Swarm
+
 Commands:
   attach      Attach local standard input, output, and error streams to a running container
-  build       Build an image from a Dockerfile
   commit      Create a new image from a container's changes
   cp          Copy files/folders between a container and the local filesystem
   create      Create a new container
   diff        Inspect changes to files or directories on a container's filesystem
   events      Get real time events from the server
-  exec        Run a command in a running container
   export      Export a container's filesystem as a tar archive
   history     Show the history of an image
-  images      List images
   import      Import the contents from a tarball to create a filesystem image
-  info        Display system-wide information
   inspect     Return low-level information on Docker objects
   kill        Kill one or more running containers
   load        Load an image from a tar archive or STDIN
-  login       Log in to a Docker registry
-  logout      Log out from a Docker registry
   logs        Fetch the logs of a container
   pause       Pause all processes within one or more containers
   port        List port mappings or a specific mapping for the container
-  ps          List containers
-  pull        Pull an image or a repository from a registry
-  push        Push an image or a repository to a registry
   rename      Rename a container
   restart     Restart one or more containers
   rm          Remove one or more containers
   rmi         Remove one or more images
-  run         Run a command in a new container
   save        Save one or more images to a tar archive (streamed to STDOUT by default)
-  search      Search the Docker Hub for images
   start       Start one or more stopped containers
   stats       Display a live stream of container(s) resource usage statistics
   stop        Stop one or more running containers
@@ -230,18 +216,31 @@ Commands:
   top         Display the running processes of a container
   unpause     Unpause all processes within one or more containers
   update      Update configuration of one or more containers
-  version     Show the Docker version information
   wait        Block until one or more containers stop, then print their exit codes
+
+Global Options:
+      --config string      Location of client config files (default "/home/ubuntu/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket to connect to
+  -l, --log-level string   Set the logging level ("debug", "info", "warn", "error", "fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/home/ubuntu/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/home/ubuntu/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/home/ubuntu/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
 
 Run 'docker COMMAND --help' for more information on a command.
 
-To get more help with docker, check out our guides at https://docs.docker.com/go/guides/
+For more help on how to use Docker, head to https://docs.docker.com/go/guides/
 
 ```
 
 Ahora podemos ejecutar contenedores utilizando imáges desde Docker hub:
 ```
 $ docker container run -it ubuntu:18.04 bash
+
 Unable to find image 'ubuntu:18.04' locally
 18.04: Pulling from library/ubuntu
 23884877105a: Pull complete 
@@ -260,7 +259,7 @@ root@7bd71a3f1fa6:/#
 
 a) Buscar en el Docker Hub (https://hub.docker.com/) la imagen PHP
  
-Verás que dispone de varias imágenes etiquetadas con Apache
+Verás que dispone de varias imágenes etiquetadas (tgas) con Apache
  
 b) Extraer la imagen php:apache desde el Docker Hub
 ```
