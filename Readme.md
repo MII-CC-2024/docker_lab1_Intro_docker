@@ -259,7 +259,7 @@ root@7bd71a3f1fa6:/#
 
 a) Buscar en el Docker Hub (https://hub.docker.com/) la imagen PHP
  
-Verás que dispone de varias imágenes etiquetadas (tgas) con Apache
+Verás que dispone de varias imágenes etiquetadas (tags) con Apache
  
 b) Extraer la imagen php:apache desde el Docker Hub
 ```
